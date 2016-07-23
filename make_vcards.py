@@ -141,7 +141,7 @@ if __name__ == "__main__":
     for row in df.itertuples():
         filename = "{}{}_{}.vcf".format(dir_name, row.first_name, row.last_name)
         filename = filename.lower().replace(' ', '_').replace('-', '_')
-        filename = filename.replace('(', '_').replace(')', '_')
+        filename = filename.replace('(', '').replace(')', '')
         print("Making {}".format(filename))
         write_vcard(filename = filename, 
                     first = row.first_name,
