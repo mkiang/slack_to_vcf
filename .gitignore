@@ -1,0 +1,8 @@
+# Don't upload credentials
+slack_creds.py
+
+# Don't upload generated files
+slack_vcfs/
+
+# Compiled
+*.pyc

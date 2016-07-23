@@ -1,0 +1,2 @@
+# Get a Slack API token: https://api.slack.com/web
+API_KEY = 'Your Slack API Key Here'
