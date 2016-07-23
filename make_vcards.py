@@ -45,7 +45,7 @@ def get_user_list(api_key, make_useful=True, return_request=False,
 
         if make_useful:
             df = df[['first_name', 'last_name', 'real_name_normalized',
-                     'email', 'skype', 'phone', 'title', 'image_original']]
+                     'email', 'skype', 'phone', 'title', 'image_1024']]
 
             # Clean up the weird unicode stuff a bit, clean up white space
             df = df.apply(lambda(x): x.str.encode('ascii',
@@ -151,4 +151,4 @@ if __name__ == "__main__":
                     tel = row.phone, 
                     skype = row.skype, 
                     title = row.title, 
-                    pic_url = row.image_original)
+                    pic_url = row.image_1024)
