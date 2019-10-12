@@ -16,6 +16,15 @@ def mkdir_p(path):
             raise
 
 
+def is_bot(member):
+    """ Recognize if slack workspace member is bot
+
+    :param dict member struct from the slack api json response
+    :return: boolean
+    """
+    return member['is_bot'] or member['name'] == 'slackbot'
+
+
 def get_user_list(api_key, make_useful=True, return_request=False,
                   ignore_key='#ignore'):
     """ Downloads the Slack user list and returns a pd.DataFrame
@@ -37,7 +46,9 @@ def get_user_list(api_key, make_useful=True, return_request=False,
     if not r.ok:
         raise Exception("Bad request. Error code: {}".format(r.status_code))
     else:
-        df = pd.io.json.json_normalize(r.json()['members'])
+        members = r.json()['members']
+        filtered_members = [m for m in members if not is_bot(m)]
+        df = pd.io.json.json_normalize(filtered_members)
 
         # Slightly better column names
         df.columns = [c.replace('.', '_').replace('profile_', '')
@@ -56,9 +67,7 @@ def get_user_list(api_key, make_useful=True, return_request=False,
             df = df[df.title != ignore_key]
 
             # Take out the people without a first and last name
-            df = df[(pd.notnull(df.first_name)) &
-                    (pd.notnull(df.last_name)) &
-                    (pd.notnull(df.real_name_normalized))]
+            df = df[(pd.notnull(df.real_name_normalized))]
             
             df.reset_index(inplace=True, drop=True)
 
@@ -139,7 +148,7 @@ if __name__ == "__main__":
     df.to_csv(dir_name + '0_contacts.csv', index=False)
 
     for row in df.itertuples():
-        filename = "{}{}_{}.vcf".format(dir_name, row.first_name, row.last_name)
+        filename = "{}{}.vcf".format(dir_name, row.real_name_normalized)
         filename = filename.lower().replace(' ', '_').replace('-', '_')
         filename = filename.replace('(', '').replace(')', '')
         print("Making {}".format(filename))
