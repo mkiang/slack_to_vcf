@@ -2,6 +2,16 @@
 
 A simple script that just takes your Slack API, downloads all information for all users on your team, and generates `vcf` files.
 
+## Installation
+
+Script is workable with Python 2.7
+
+1. Install Python 2.7
+2. Install  packages which are described in `requitements.txt`:
+```bash
+pip install -U -r requitements.txt
+```
+
 ## Usage
 
 Edit the `slack_creds.py.example` file with your actual Slack API and remove the `.example` from the file. Then simply run `python make_vcards.py`.

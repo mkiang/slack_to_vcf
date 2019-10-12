@@ -1,0 +1,3 @@
+requests==2.22.0
+numpy==1.16.5
+pandas==0.17.1  # the newest one 0.24 is incompatible with this project, 0.17.1 is first one which provides namedtuples through itertuples interface
