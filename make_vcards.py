@@ -139,7 +139,7 @@ if __name__ == "__main__":
     df.to_csv(dir_name + '0_contacts.csv', index=False)
 
     for row in df.itertuples():
-        filename = "{}{}_{}.vcf".format(dir_name, row.first_name, row.last_name)
+        filename = "{}{}.vcf".format(dir_name, row.real_name_normalized)
         filename = filename.lower().replace(' ', '_').replace('-', '_')
         filename = filename.replace('(', '').replace(')', '')
         print("Making {}".format(filename))
